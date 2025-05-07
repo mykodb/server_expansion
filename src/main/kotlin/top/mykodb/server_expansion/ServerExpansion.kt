@@ -14,7 +14,7 @@ import org.slf4j.Logger
 import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS
 import top.mykodb.server_expansion.data.DataHandler
 import top.mykodb.server_expansion.event.CleanGarbage
-import top.mykodb.server_expansion.event.EventHandler
+import top.mykodb.server_expansion.event.Welcome
 
 
 const val MODID: String = "server_expansion"
@@ -26,7 +26,7 @@ class Mod(modBus:IEventBus,container:ModContainer){
         // 注册 数据生成
         MOD_BUS.register(DataHandler())
         // 注册 事件
-        NeoForge.EVENT_BUS.register(EventHandler)
+        NeoForge.EVENT_BUS.register(Welcome)
         NeoForge.EVENT_BUS.register(CleanGarbage)
         // 注册 配置文件
         container.registerConfig(ModConfig.Type.SERVER, Config.serverSpec)
@@ -36,7 +36,6 @@ class Mod(modBus:IEventBus,container:ModContainer){
 @Mod(value = MODID, dist = [Dist.CLIENT])
 class ModClient(container:ModContainer) {
     init {
-
         // 模组配置界面
         container.registerExtensionPoint(
             IConfigScreenFactory::class.java,

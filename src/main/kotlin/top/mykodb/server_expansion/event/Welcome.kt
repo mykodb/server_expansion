@@ -9,7 +9,7 @@ import top.mykodb.server_expansion.Config.welcomeList
 
 
 
-object EventHandler {
+object Welcome {
     @SubscribeEvent
     fun onLoggedIn(event: PlayerLoggedInEvent) {
         val player = event.entity
