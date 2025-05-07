@@ -23,12 +23,12 @@ val LOGGER: Logger = LogUtils.getLogger()
 @Mod(value = MODID)
 class Mod(modBus:IEventBus,container:ModContainer){
     init {
-        // 注册 数据生成
+        // register DataGeneration
         MOD_BUS.register(DataHandler())
-        // 注册 事件
+        // register Event
         NeoForge.EVENT_BUS.register(Welcome)
         NeoForge.EVENT_BUS.register(CleanGarbage)
-        // 注册 配置文件
+        // register Profiles
         container.registerConfig(ModConfig.Type.SERVER, Config.serverSpec)
     }
 }
@@ -36,7 +36,7 @@ class Mod(modBus:IEventBus,container:ModContainer){
 @Mod(value = MODID, dist = [Dist.CLIENT])
 class ModClient(container:ModContainer) {
     init {
-        // 模组配置界面
+        // ModConfigurationInterface
         container.registerExtensionPoint(
             IConfigScreenFactory::class.java,
             IConfigScreenFactory { mod: ModContainer, parent: Screen -> ConfigurationScreen(mod, parent) }

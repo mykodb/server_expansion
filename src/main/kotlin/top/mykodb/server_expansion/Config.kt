@@ -14,11 +14,10 @@ import org.apache.commons.lang3.tuple.Pair
 @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD)
 object Config {
     class Server(builder:ModConfigSpec.Builder){
-        // 是否启用欢迎语
+
         val enableWelcome: ModConfigSpec.BooleanValue = builder
-            .comment("是否启用服务器欢迎语")
             .define(listOf("welcome","enable_welcome"), true)
-        // 设置 欢迎语
+
         val welcomeList: ModConfigSpec.ConfigValue<List<String>> = builder
             .defineListAllowEmpty(
                 listOf("welcome","welcomeList"),
@@ -30,15 +29,13 @@ object Config {
             )
 
         val enableCleanup: ModConfigSpec.BooleanValue = builder
-            .comment("是否启用掉落物清理")
             .define(listOf("cleanup","enable_cleanup"), true)
 
         val cleanupInterval: ModConfigSpec.ConfigValue<Int> = builder
-            .comment("清理间隔(tick)")
             .defineInRange(listOf("cleanup","cleanup_interval"),1200,1,Int.MAX_VALUE )
         //黑名单
         val cleanupBlacklist: ModConfigSpec.ConfigValue<List<String>> = builder
-            .defineListAllowEmpty(//清理垃圾
+            .defineListAllowEmpty(
                 listOf("cleanup","cleanup_blacklist"),
                 listOf(
                     "minecraft:dragon_egg"
