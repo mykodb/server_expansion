@@ -40,11 +40,11 @@ object LangProvider{
         override fun addTranslations() {
             add("$configuration.welcome","欢迎语")
             add("$configuration.enable_welcome","启用 欢迎语")
-            add("$configuration.enable_cleanup.tooltip","是否启用服务器欢迎语")
+            add("$configuration.enable_welcome.tooltip","是否启用服务器欢迎语")
             add("$configuration.welcomeList","设置 欢迎语")
             add("$configuration.cleanup","掉落物清理")
             add("$configuration.enable_cleanup","启用 掉落物清理")
-            add("$configuration.enable_welcome.tooltip","是否启用掉落物清理")
+            add("$configuration.enable_cleanup.tooltip","是否启用掉落物清理")
             add("$configuration.cleanup_interval","清理间隔")
             add("$configuration.cleanup_interval.tooltip","清理间隔(tick)")
             add("$configuration.cleanup_blacklist","清理黑名单")
