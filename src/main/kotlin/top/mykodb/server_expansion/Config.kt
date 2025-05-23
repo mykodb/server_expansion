@@ -11,8 +11,11 @@ import net.neoforged.fml.event.config.ModConfigEvent.Reloading
 import net.neoforged.neoforge.common.ModConfigSpec
 import org.apache.commons.lang3.tuple.Pair
 
+
+
 @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD)
 object Config {
+
     class Server(builder:ModConfigSpec.Builder){
 
         val enableWelcome: ModConfigSpec.BooleanValue = builder
@@ -44,11 +47,26 @@ object Config {
                 {""},
                 { it is String && it.count { c -> c == ':' } == 1 && it.indexOf(':').let { idx -> idx > 0 && idx < it.length - 1 } }
             )
+
+        // Lang 自定义提示语
+        val cleanupStats: ModConfigSpec.ConfigValue<String> = builder
+            .define(listOf("cleanup","lang","cleanup_stats"),"清理物品[totalEntities]组，累计物品[totalItems]个；清理用时[elapsed]毫秒。")
+        val noGarbage: ModConfigSpec.ConfigValue<String> = builder
+            .define(listOf("cleanup","lang","no_garbage"),"清理完成，没有垃圾哦")
+        val viewGarbage: ModConfigSpec.ConfigValue<String> = builder
+            .define(listOf("cleanup","lang","view_garbage"),"[查看清理物品]")
+        val isCleanupBundleTime : ModConfigSpec.ConfigValue<String> = builder
+            .define(listOf("cleanup","lang","isCleanupBundleTime"),"垃圾袋被清理了！")
+        val is30SecondsBeforeCleanupBundle: ModConfigSpec.ConfigValue<String> = builder
+            .define(listOf("cleanup","lang","is30SecondsBeforeCleanupBundle"),"警告:30秒后将清理垃圾袋。")
+        val is30SecondsBeforeCleanup: ModConfigSpec.ConfigValue<String> = builder
+            .define(listOf("cleanup","lang","is30SecondsBeforeCleanup"),"警告:30秒后将清理所有掉落物!")
     }
 
     private var serverPair: Pair<Server, ModConfigSpec> = ModConfigSpec.Builder().configure(::Server)
     val serverSpec: ModConfigSpec = serverPair.getRight()
     val SERVER: Server = serverPair.getLeft()
+
 
     var enableWelcome: Boolean  = true
     var enableCleanup: Boolean = true
@@ -82,4 +100,5 @@ object Config {
     fun onFileChange(event: Reloading) {
         updateCache()
     }
+
 }

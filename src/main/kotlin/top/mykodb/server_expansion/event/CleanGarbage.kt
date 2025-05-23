@@ -16,12 +16,11 @@ import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.neoforge.event.RegisterCommandsEvent
 import net.neoforged.neoforge.event.server.ServerStoppingEvent
 import net.neoforged.neoforge.event.tick.ServerTickEvent
+import top.mykodb.server_expansion.Config.SERVER
 import top.mykodb.server_expansion.Config.cleanupBlacklist
 import top.mykodb.server_expansion.Config.cleanupInterval
 import top.mykodb.server_expansion.Config.enableCleanup
 import top.mykodb.server_expansion.LOGGER
-import top.mykodb.server_expansion.data.LangProvider
-import top.mykodb.server_expansion.data.LangProvider.no_garbage
 import kotlin.system.measureNanoTime
 
 
@@ -65,19 +64,27 @@ object CleanGarbage {
         }
         playerList.forEach {player->
             if (is30SecondsBeforeCleanupBundle){
-                player.displayClientMessage( Component.translatable(LangProvider.is30SecondsBeforeCleanupBundle),true)
+                player.displayClientMessage( Component.literal(SERVER.is30SecondsBeforeCleanupBundle.get()),true)
             }
             if (isCleanupBundleTime){
-                player.displayClientMessage( Component.translatable(LangProvider.isCleanupBundleTime),true)
+                player.displayClientMessage( Component.literal(SERVER.isCleanupBundleTime.get()),true)
             }
             if (is30SecondsBeforeCleanup){
-                player.displayClientMessage(Component.translatable(LangProvider.is30SecondsBeforeCleanup),true)
+                player.displayClientMessage(Component.literal(SERVER.is30SecondsBeforeCleanup.get()),true)
             }
             if (isCleanupTime){
                 if (totalEntities == 0) {
-                    player.displayClientMessage(Component.translatable(no_garbage),true)
+                    player.displayClientMessage(Component.literal(SERVER.noGarbage.get()),true)
                 }else{
-                    player.displayClientMessage(Component.translatable(LangProvider.cleanup_stats,totalEntities , totalItems ,elapsed/1000000.0),true)
+                    player.displayClientMessage(
+                        Component.literal(
+                            SERVER.cleanupStats.get()
+                                .replace("[totalEntities]",totalEntities.toString())
+                                .replace("[totalItems]",totalItems.toString())
+                                .replace("[elapsed]",(elapsed/1000000.0).toString())
+                        ),
+                        true
+                    )
                 }
             }
 
@@ -85,15 +92,16 @@ object CleanGarbage {
     }
 
     fun viewGarbage(player: ServerPlayer?) {
+        val viewGarbage = SERVER.viewGarbage.get()
         val bundle = ItemStack(Items.BUNDLE)
-        bundle.set(DataComponents.CUSTOM_NAME, Component.translatable(LangProvider.garbage_bags))
+        bundle.set(DataComponents.CUSTOM_NAME, Component.literal(viewGarbage ))
         bundle.set(DataComponents.BUNDLE_CONTENTS,BundleContents(this.mutableContents) )
         if (player==null){
             LOGGER.info(this.mutableContents.toString())
             return
         }
         player.sendSystemMessage(
-            Component.translatable(LangProvider.view_garbage)
+            Component.literal(viewGarbage)
                 .withStyle(Style.EMPTY.withHoverEvent(
                     HoverEvent(HoverEvent.Action.SHOW_ITEM, HoverEvent.ItemStackInfo (bundle))
                 ))

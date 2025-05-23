@@ -29,8 +29,9 @@ class Mod(modBus:IEventBus,container:ModContainer){
         NeoForge.EVENT_BUS.register(Welcome)
         NeoForge.EVENT_BUS.register(CleanGarbage)
         // register Profiles
-        container.registerConfig(ModConfig.Type.SERVER, Config.serverSpec)
+        container.registerConfig(ModConfig.Type.SERVER, Config.serverSpec,"$MODID/server_config.toml")
     }
+
 }
 
 @Mod(value = MODID, dist = [Dist.CLIENT])
@@ -43,3 +44,4 @@ class ModClient(container:ModContainer) {
         )
     }
 }
+

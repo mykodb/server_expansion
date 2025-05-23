@@ -7,8 +7,6 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEven
 import top.mykodb.server_expansion.Config.enableWelcome
 import top.mykodb.server_expansion.Config.welcomeList
 
-
-
 object Welcome {
     @SubscribeEvent
     fun onLoggedIn(event: PlayerLoggedInEvent) {
@@ -28,7 +26,6 @@ object Welcome {
         )
     }
 }
-
 
 
 
